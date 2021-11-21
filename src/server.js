@@ -12,7 +12,11 @@ const app = express();
 const port = 3000;
 
 var messages = [];
-var listaDeIps = ["127.0.0.1:3000", "45.226.110.71:3000", "177.131.164.128:3000"];
+var listaDeIps = [
+  "127.0.0.1:3000",
+  "45.226.110.71:3000",
+  "177.131.164.128:3000",
+];
 
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
@@ -92,7 +96,10 @@ const menu = async (messages, listaDeIps) => {
                 : "Falha ao enviar a mensagem"
             );
           })
-          .catch((e) => {});
+          .catch((e) => {
+            console.log("Falha ao enviar a mensagem");
+            console.log(e);
+          });
 
         break;
       case "6":
