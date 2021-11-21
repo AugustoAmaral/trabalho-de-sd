@@ -12,7 +12,7 @@ const app = express();
 const port = 3000;
 
 var messages = [];
-var listaDeIps = ["127.0.0.1", "45.226.110.71", "177.131.164.128"];
+var listaDeIps = ["127.0.0.1:3000", "45.226.110.71:3000", "177.131.164.128:3000"];
 
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
@@ -81,10 +81,18 @@ const menu = async (messages, listaDeIps) => {
         console.log("Opções de IP:\n");
         console.log(listaDeIps.map((str, k) => `${k} - ${str}`).join("\n"));
         const ipToSend = await makeAQuestion("Selecione o ID do IP na lista: ");
-        await fetch(`http://${listaDeIps[ipToSend]}:3000`, {
+        await fetch(`http://${listaDeIps[ipToSend]}`, {
           method: "POST",
           body: messageToSend,
-        }).then((r) => r.status);
+        })
+          .then((r) => {
+            console.log(
+              r.status === 200
+                ? `Mensagem enviada para ${listaDeIps[ipToSend]}`
+                : "Falha ao enviar a mensagem"
+            );
+          })
+          .catch((e) => {});
 
         break;
       case "6":
