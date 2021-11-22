@@ -1,5 +1,4 @@
-const { makeAQuestion } = require("./utils");
-const fetch = require("node-fetch");
+const { makeAQuestion, sendMessage } = require("./utils");
 
 /**
  *
@@ -31,7 +30,9 @@ module.exports = async (messages, listaDeIps) => {
         );
         break;
       case "2":
-        await makeAQuestion("Digite o IP (Com a porta no final Ex. 127.0.0.1:3000): ").then((ip) => {
+        await makeAQuestion(
+          "Digite o IP (Com a porta no final Ex. 127.0.0.1:3000): "
+        ).then((ip) => {
           listaDeIps.push(ip);
           console.log(`IP adicionado: ${ip}`);
         });
@@ -56,21 +57,8 @@ module.exports = async (messages, listaDeIps) => {
         console.log("Opções de IP:\n");
         console.log(listaDeIps.map((str, k) => `${k} - ${str}`).join("\n"));
         const ipToSend = await makeAQuestion("Selecione o ID do IP na lista: ");
-        await fetch(`http://${listaDeIps[ipToSend]}`, {
-          method: "POST",
-          body: messageToSend,
-        })
-          .then((r) => {
-            console.log(
-              r.status === 200
-                ? `Mensagem enviada para ${listaDeIps[ipToSend]}`
-                : "Falha ao enviar a mensagem"
-            );
-          })
-          .catch((e) => {
-            console.log("Falha ao enviar a mensagem");
-            console.log(e);
-          });
+
+        await sendMessage(messageToSend, listaDeIps[ipToSend]);
 
         break;
       case "6":
