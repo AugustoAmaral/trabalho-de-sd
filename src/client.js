@@ -1,6 +1,12 @@
 const { makeAQuestion } = require("./utils");
 const fetch = require("node-fetch");
 
+/**
+ *
+ * @param {Array} messages
+ * @param {Array} listaDeIps
+ * @returns
+ */
 module.exports = async (messages, listaDeIps) => {
   console.log("\n\n");
   console.log("--Menu--");
@@ -25,7 +31,7 @@ module.exports = async (messages, listaDeIps) => {
         );
         break;
       case "2":
-        await makeAQuestion("Digite o IP: ").then((ip) => {
+        await makeAQuestion("Digite o IP (Com a porta no final Ex. 127.0.0.1:3000): ").then((ip) => {
           listaDeIps.push(ip);
           console.log(`IP adicionado: ${ip}`);
         });
