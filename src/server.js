@@ -32,10 +32,10 @@ const main = async () => {
   var rodando = true;
   while (rodando) {
     rodando = await client(messages, listaDeIps);
-    if (!rodando) {
-      server.close();
-    }
   }
+
+  server.close();
+  process.exit(0);
 };
 
 main();
